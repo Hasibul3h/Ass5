@@ -1,3 +1,5 @@
+document.addEventListener('DOMContentLoaded', function() {
+
 // Get all seat buttons
 const seatButtons = document.querySelectorAll('.seat');
 // Get the "Next" button
@@ -131,5 +133,87 @@ seatButtons.forEach(seatButton => {
     });
 });
 
+/// Get coupon input and apply button
+const couponInput = document.getElementById('coupon-code');
+const applyButton = document.querySelector('.coupon button');
+
+// Add event listener to apply button
+// applyButton.addEventListener('click', function(event) {
+//     event.preventDefault(); // Prevent form submission
+
+//     // Get entered coupon code
+//     const couponCode = couponInput.value;
+
+//     // Log the entered coupon code to verify it's correct
+//     console.log('Entered coupon code:', couponCode);
+
+//     // Calculate discount based on coupon code
+//     let discountPercentage = 0;
+//     if (couponCode === 'coupon1') {
+//         discountPercentage = 10;
+//     } else if (couponCode === 'coupon2') {
+//         discountPercentage = 20;
+//     }
+
+//     // Log the discount percentage to verify it's correct
+//     console.log('Discount percentage:', discountPercentage);
+
+//     // Get total price
+//     const totalPrice = calculateTotalPrice();
+
+//     // Calculate discount amount
+//     const discountAmount = (totalPrice * discountPercentage) / 100;
+
+//     // Log the discount amount to verify it's correct
+//     console.log('Discount amount:', discountAmount);
+
+//     // Calculate discounted price
+//     const discountedPrice = totalPrice - discountAmount;
+
+//     // Log the discounted price to verify it's correct
+//     console.log('Discounted price:', discountedPrice);
+
+//     // Display discount amount
+//     const discountMessage = document.createElement('p');
+//     discountMessage.textContent = `Discounted Price: BDT ${discountedPrice}`;
+//     document.body.appendChild(discountMessage);
+// });
+
+// Add event listener to apply button
+applyButton.addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent form submission
+
+    // Get entered coupon code
+    const couponCode = couponInput.value;
+
+    // Calculate discount based on coupon code
+    let discountPercentage = 0;
+    if (couponCode === 'coupon1') {
+        discountPercentage = 10;
+    } else if (couponCode === 'coupon2') {
+        discountPercentage = 20;
+    }
+
+    // Get total price
+    const totalPrice = calculateTotalPrice();
+
+    // Calculate discount amount
+    const discountAmount = (totalPrice * discountPercentage) / 100;
+
+    // Calculate discounted price
+    const discountedPrice = totalPrice - discountAmount;
+
+    // Display discount amount
+    const discountAmountElement = document.querySelector('.dicount-amount');
+    discountAmountElement.textContent = `Discounted Price: BDT ${discountedPrice}`;
+
+    // Hide the form
+    const couponForm = document.querySelector('.coupon form');
+    couponForm.style.display = 'none';
+});
+
+
 // Initial update of seat counts and total price
 handleSeatSelection();
+
+});
