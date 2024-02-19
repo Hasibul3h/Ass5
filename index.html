@@ -203,22 +203,22 @@
                         <div class="seat-wrap flex flex-col gap-5">
                             <div class="seat-row">
                                 <div class="seat-row-left flex gap-5">
-                                    <button type="button" class="seat">A1</button>
-                                    <button type="button" class="seat">A2</button>
+                                    <button type="button" class="seat" data-price="550">A1</button>
+                                    <button type="button" class="seat" data-price="550">A2</button>
                                 </div>
                                 <div class="seat-row-right flex gap-5">
-                                    <button type="button" class="seat">A3</button>
-                                    <button type="button" class="seat">A4</button>
+                                    <button type="button" class="seat" data-price="550">A3</button>
+                                    <button type="button" class="seat" data-price="550">A4</button>
                                 </div>
                             </div>
                             <div class="seat-row">
                                 <div class="seat-row-left flex gap-5">
-                                    <button type="button" class="seat">B1</button>
-                                    <button type="button" class="seat">B2</button>
+                                    <button type="button" class="seat" data-price="550">B1</button>
+                                    <button type="button" class="seat" data-price="550">B2</button>
                                 </div>
                                 <div class="seat-row-right flex gap-5">
-                                    <button type="button" class="seat">B3</button>
-                                    <button type="button" class="seat">B4</button>
+                                    <button type="button" class="seat" data-price="550">B3</button>
+                                    <button type="button" class="seat" data-price="550">B4</button>
                                 </div>
                             </div>
                         </div>
@@ -236,28 +236,21 @@
                                     <span
                                         class="w-[33.33%] text-right text-[16px] font-medium text-heading">Price</span>
                                 </div>
-                                <!-- <div class="seat-item pt-3 flex">
-                                    <span class="w-[33.33%] text-left text-[16px] font-normal text-heading/60">C2</span>
-                                    <span
-                                        class="w-[33.33%] text-left text-[16px] font-normal text-heading/60">Economoy</span>
-                                    <span
-                                        class="w-[33.33%] text-right text-[16px] font-normal text-heading/60">550</span>
-                                </div> -->
                                 <div class="selected-seats-info"></div>
                             </div>
-                            <div class="totat-price flex justify-between border-t border-heading/20 pt-3 mt-3">
+                            <div class="flex justify-between border-t border-heading/20 pt-3 mt-3">
                                 <span class="text-left text-[16px] font-medium text-heading">Total Price</span>
-                                <span class="text-right text-[16px] font-medium text-heading">BDT 1100</span>
+                                <span class="text-right text-[16px] font-medium text-heading total-price">BDT 0</span>
                             </div>
                             <div class="coupon">
                                 <form action="#">
-                                    <input type="text" placeholder="Have any copupon?">
+                                    <input id="coupun-code" type="text" placeholder="Have any copupon?">
                                     <button type="submit" class="bg-[#1DD100]">Apply</button>
                                 </form>
                             </div>
-                            <div class="grand-totat-price flex justify-between mt-3">
+                            <div class="flex justify-between mt-3">
                                 <span class="text-left text-[16px] font-medium text-heading">Grand Total</span>
-                                <span class="text-right text-[16px] font-medium text-heading">BDT 1100</span>
+                                <span class="text-right text-[16px] font-medium text-heading grand-totat-price">BDT 1100</span>
                             </div>
                         </div>
                         <div class="mt-7">

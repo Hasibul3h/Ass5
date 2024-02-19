@@ -52,7 +52,68 @@ function removeSelectSeatMessage() {
     }
 }
 
-// Add click event listener to each seat button
+// Function to calculate the total price based on selected seats and price per seat
+function calculateTotalPrice() {
+    const pricePerSeat = 550; // Assuming price per seat is 550 BDT, you can adjust this as needed
+    const selectedSeatsCount = document.querySelectorAll('.seat.active').length;
+    const totalPrice = pricePerSeat * selectedSeatsCount;
+    return totalPrice;
+}
+
+// Update total price element with dynamically calculated total price
+function updateTotalPrice() {
+    const totalPrice = calculateTotalPrice();
+    const totalPriceElement = document.querySelector('.total-price');
+    totalPriceElement.textContent = `BDT ${totalPrice}`;
+}
+
+// Function to display selected seat information and total price
+function updateSelectedSeatsInfo() {
+    let selectedSeatsInfoHTML = '';
+    const selectedSeats = document.querySelectorAll('.seat.active');
+
+    selectedSeats.forEach(seatButton => {
+        const seatName = seatButton.textContent;
+        const seatPrice = getSeatPrice(seatButton);
+
+        selectedSeatsInfoHTML += `
+            <div class="seat-item pt-3 flex" data-seat="${seatName}">
+                <span class="w-[33.33%] text-left text-[16px] font-normal text-heading/60">${seatName}</span>
+                <span class="w-[33.33%] text-left text-[16px] font-normal text-heading/60">${seatPrice}</span>
+            </div>
+        `;
+    });
+
+    // Display selected seat information
+    selectedSeatsInfoContainer.innerHTML = selectedSeatsInfoHTML;
+
+    // Display total price
+    updateTotalPrice();
+}
+
+// Function to get seat price from the markup
+function getSeatPrice(seatButton) {
+    // You need to replace this with the actual logic to extract the price from your markup
+    // For example, if the price is stored as a data attribute, you might do something like:
+    // return seatButton.getAttribute('data-price');
+    
+    // For demonstration purposes, let's assume the price is stored as text content within the seat button
+    return seatButton.dataset.price; // Assuming the price is stored as a data attribute named 'data-price'
+}
+
+// Function to handle seat increase/decrease and price calculation
+function handleSeatSelection() {
+    // Update selected seat information
+    updateSelectedSeatsInfo();
+
+    // Update total price
+    updateTotalPrice();
+
+    // Update seat counts
+    updateSeatCounts();
+}
+
+// Add click event listener to each seat button for seat increase/decrease
 seatButtons.forEach(seatButton => {
     seatButton.addEventListener('click', () => {
         // Check if the maximum seat selection limit has been reached
@@ -65,36 +126,10 @@ seatButtons.forEach(seatButton => {
         // Toggle 'active' class on click
         seatButton.classList.toggle('active');
 
-        // Update the seat counts
-        updateSeatCounts();
-
-        // Print seat information if the seat is selected
-        if (seatButton.classList.contains('active')) {
-            // Extract seat name, class, and price
-            const seatName = seatButton.textContent;
-            const seatClass = 'Economy'; // You can modify this to extract class from your markup
-            const seatPrice = '550'; // You can modify this to extract price from your markup
-
-            // Create HTML markup for seat information
-            const seatInfoMarkup = `
-                <div class="seat-item pt-3 flex" data-seat="${seatName}">
-                    <span class="w-[33.33%] text-left text-[16px] font-normal text-heading/60">${seatName}</span>
-                    <span class="w-[33.33%] text-left text-[16px] font-normal text-heading/60">${seatClass}</span>
-                    <span class="w-[33.33%] text-right text-[16px] font-normal text-heading/60">${seatPrice}</span>
-                </div>
-            `;
-
-            // Append the seat information markup to the specified container
-            selectedSeatsInfoContainer.innerHTML += seatInfoMarkup;
-        } else {
-            // If the seat is deselected, remove its corresponding information from the markup
-            const selectedSeatInfo = selectedSeatsInfoContainer.querySelector(`[data-seat="${seatButton.textContent}"]`);
-            if (selectedSeatInfo) {
-                selectedSeatInfo.remove();
-            }
-        }
+        // Handle seat selection
+        handleSeatSelection();
     });
 });
 
-// Initial update of seat counts
-updateSeatCounts();
+// Initial update of seat counts and total price
+handleSeatSelection();
