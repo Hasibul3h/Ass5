@@ -96,12 +96,38 @@ function updateSelectedSeatsInfo() {
 
 // Function to get seat price from the markup
 function getSeatPrice(seatButton) {
-    // You need to replace this with the actual logic to extract the price from your markup
-    // For example, if the price is stored as a data attribute, you might do something like:
-    // return seatButton.getAttribute('data-price');
-    
-    // For demonstration purposes, let's assume the price is stored as text content within the seat button
     return seatButton.dataset.price; // Assuming the price is stored as a data attribute named 'data-price'
+}
+
+// Function to update both total price and grand total price
+function updatePrices() {
+    // Calculate total price
+    const totalPrice = calculateTotalPrice();
+
+    // Update total price element
+    const totalPriceElement = document.querySelector('.total-price');
+    totalPriceElement.textContent = `BDT ${totalPrice}`;
+
+    // Get the entered coupon code
+    const couponCode = couponInput.value;
+
+    // Calculate discount based on coupon code
+    let discountPercentage = 0;
+    if (couponCode === 'NEW15') {
+        discountPercentage = 15;
+    } else if (couponCode === 'Couple20') {
+        discountPercentage = 20;
+    }
+
+    // Calculate discount amount
+    const discountAmount = (totalPrice * discountPercentage) / 100;
+
+    // Calculate grand total price
+    const grandTotalPrice = totalPrice - discountAmount;
+
+    // Update grand total price element
+    const grandTotalPriceElement = document.querySelector('.grand-totat-price');
+    grandTotalPriceElement.textContent = `BDT ${grandTotalPrice}`;
 }
 
 // Function to handle seat increase/decrease and price calculation
@@ -110,11 +136,12 @@ function handleSeatSelection() {
     updateSelectedSeatsInfo();
 
     // Update total price
-    updateTotalPrice();
+    updatePrices();
 
     // Update seat counts
     updateSeatCounts();
 }
+
 
 // Add click event listener to each seat button for seat increase/decrease
 seatButtons.forEach(seatButton => {
