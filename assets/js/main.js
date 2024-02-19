@@ -30,7 +30,7 @@ function updateSeatCounts() {
     totalSeatsElement.textContent = `${availableSeats} Seats left`;
 
     // Update the booking seat count display
-    bookingSeatCountElement.textContent = `${selectedSeats} Seats booked`;
+    bookingSeatCountElement.textContent = `${selectedSeats}`;
 
     // If no seats are selected, display the message
     if (selectedSeats === 0) {
@@ -81,6 +81,7 @@ function updateSelectedSeatsInfo() {
         selectedSeatsInfoHTML += `
             <div class="seat-item pt-3 flex" data-seat="${seatName}">
                 <span class="w-[33.33%] text-left text-[16px] font-normal text-heading/60">${seatName}</span>
+                <span class="w-[33.33%] text-left text-[16px] font-normal text-heading/60">${`Economy`}</span>
                 <span class="w-[33.33%] text-left text-[16px] font-normal text-heading/60">${seatPrice}</span>
             </div>
         `;
@@ -133,51 +134,9 @@ seatButtons.forEach(seatButton => {
     });
 });
 
-/// Get coupon input and apply button
+// Get coupon input and apply button
 const couponInput = document.getElementById('coupon-code');
-const applyButton = document.querySelector('.coupon button');
-
-// Add event listener to apply button
-// applyButton.addEventListener('click', function(event) {
-//     event.preventDefault(); // Prevent form submission
-
-//     // Get entered coupon code
-//     const couponCode = couponInput.value;
-
-//     // Log the entered coupon code to verify it's correct
-//     console.log('Entered coupon code:', couponCode);
-
-//     // Calculate discount based on coupon code
-//     let discountPercentage = 0;
-//     if (couponCode === 'coupon1') {
-//         discountPercentage = 10;
-//     } else if (couponCode === 'coupon2') {
-//         discountPercentage = 20;
-//     }
-
-//     // Log the discount percentage to verify it's correct
-//     console.log('Discount percentage:', discountPercentage);
-
-//     // Get total price
-//     const totalPrice = calculateTotalPrice();
-
-//     // Calculate discount amount
-//     const discountAmount = (totalPrice * discountPercentage) / 100;
-
-//     // Log the discount amount to verify it's correct
-//     console.log('Discount amount:', discountAmount);
-
-//     // Calculate discounted price
-//     const discountedPrice = totalPrice - discountAmount;
-
-//     // Log the discounted price to verify it's correct
-//     console.log('Discounted price:', discountedPrice);
-
-//     // Display discount amount
-//     const discountMessage = document.createElement('p');
-//     discountMessage.textContent = `Discounted Price: BDT ${discountedPrice}`;
-//     document.body.appendChild(discountMessage);
-// });
+const applyButton = document.getElementById('applyButton');
 
 // Add event listener to apply button
 applyButton.addEventListener('click', function(event) {
@@ -188,9 +147,9 @@ applyButton.addEventListener('click', function(event) {
 
     // Calculate discount based on coupon code
     let discountPercentage = 0;
-    if (couponCode === 'coupon1') {
-        discountPercentage = 10;
-    } else if (couponCode === 'coupon2') {
+    if (couponCode === 'NEW15') {
+        discountPercentage = 15;
+    } else if (couponCode === 'Couple20') {
         discountPercentage = 20;
     }
 
@@ -201,7 +160,7 @@ applyButton.addEventListener('click', function(event) {
     const discountAmount = (totalPrice * discountPercentage) / 100;
 
     // Calculate discounted price
-    const discountedPrice = totalPrice - discountAmount;
+    const discountedPrice = discountAmount;
 
     // Display discount amount
     const discountAmountElement = document.querySelector('.dicount-amount');
@@ -210,7 +169,45 @@ applyButton.addEventListener('click', function(event) {
     // Hide the form
     const couponForm = document.querySelector('.coupon form');
     couponForm.style.display = 'none';
+
+    // Calculate grand total price
+    const grandTotalPrice = totalPrice - discountAmount;
+
+    // Display grand total price
+    const grandTotalPriceElement = document.querySelector('.grand-totat-price');
+    grandTotalPriceElement.textContent = `BDT ${grandTotalPrice}`;
+
+    // Enable the "Next" button
+    const nextButton = document.getElementById('nextButton');
+    nextButton.disabled = false;
 });
+
+// Add event listener to seat buttons to enable/disable apply button
+seatButtons.forEach(seatButton => {
+    seatButton.addEventListener('click', () => {
+        const selectedSeats = document.querySelectorAll('.seat.active').length;
+
+        // Enable apply button if seats are selected
+        if (selectedSeats > 0) {
+            applyButton.disabled = false;
+        } else {
+            applyButton.disabled = true;
+        }
+    });
+});
+
+// Add event listener to coupon input to enable/disable apply button
+couponInput.addEventListener('input', () => {
+    const couponCode = couponInput.value;
+
+    // Enable apply button if coupon code is not empty
+    if (couponCode.trim() !== '') {
+        applyButton.disabled = false;
+    } else {
+        applyButton.disabled = true;
+    }
+});
+
 
 
 // Initial update of seat counts and total price

@@ -201,3 +201,6 @@ select {
   border-radius: 12px;
   line-height: 40px;
 }
+.selected-seats-info {
+  padding-top: 8px;
+}
